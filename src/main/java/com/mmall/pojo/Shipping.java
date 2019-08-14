@@ -3,7 +3,7 @@ package com.mmall.pojo;
 import java.util.Date;
 
 public class Shipping {
-    private Integer id;
+    private Integer id; //shippingId
 
     private Integer userId;
 
