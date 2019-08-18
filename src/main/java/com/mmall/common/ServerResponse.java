@@ -14,7 +14,7 @@ import java.io.Serializable;
 public class ServerResponse<T> implements Serializable {
     private int status;
     private String msg;
-    private T data;
+    private T data; //data是泛型，返回数据类型可以指定类型，也可以不指定  即返回什么类型都可以
 
     private ServerResponse(int status){
         this.status = status;
@@ -36,7 +36,7 @@ public class ServerResponse<T> implements Serializable {
     @JsonIgnore
     //使之不在json序列化结果中
     public boolean isSuccess(){
-        return this.status == ResponseCode.SUCCESS.getCode(); //如果是0则响应成功。
+        return this.status == ResponseCode.SUCCESS.getCode(); //如果是0则响应成功。返回true
     }
 
     public int getStatus(){

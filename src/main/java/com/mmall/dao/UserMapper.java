@@ -21,6 +21,7 @@ public interface UserMapper {
 
     int checkEmail(String email);
 
+    //@Param为传入的参数起名字，这样在Dao层可以获得数据，一般都是有两个及以上的参数的时候，才写@Param
     User selectLogin(@Param("username") String username, @Param("password") String password);
 
     String selectQuestionByUsername(String username);

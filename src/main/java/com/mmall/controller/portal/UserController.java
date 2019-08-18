@@ -25,7 +25,8 @@ import javax.servlet.http.HttpSession;
 public class UserController {
 
     //将IUserService注入，赋给iUserService，
-    // 注入后就可以直接用“iUserService.方法名”来调用方法，不用创建类来调用方法，相当于static类的功能
+    // 注入后，Spring帮助Action完成将IUserService的实例化，不用new来实例化了，所以注入后就可以正常按照变量名来调用类中的方法了---直接用“iUserService（变量名）.方法名”
+    // 有了@Autowired和@Service注解后，Controller层调用service层的方法时不用实例化相应的类了，该工作交给Spring去做，Spring将创建好的实例交给Action，Action拿到后就可以直接使用了
     @Autowired
     private IUserService iUserService; //iUserService该名字与UserServiceImpl中@Service注入时一致
 
@@ -47,14 +48,14 @@ public class UserController {
         if(response.isSuccess()){//如果登录成功，则将该用户放入session
             session.setAttribute(Const.CURRENT_USER,response.getData()); //参数：key和value
         }
-        return response;
+        return response; //将响应信息返回给前端
     }
 
     //用户登出：退出登录
     @RequestMapping(value = "logout.do", method = RequestMethod.POST)
     @ResponseBody
     public ServerResponse<String> logout(HttpSession session){ //没有参数username和password
-        //退出登录：将session中添加的currentUser删除
+        //退出登录：将用户从session中移除 即将session中添加的currentUser删除--涉及到用户session的直接在controller层做就行，不涉及到service层
         session.removeAttribute(Const.CURRENT_USER);
         return ServerResponse.createBySuccess();
     }

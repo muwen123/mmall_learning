@@ -12,7 +12,8 @@
     <context:component-scan base-package="com.mmall" annotation-config="true"/>
 
     <!--<context:annotation-config/>-->
-    <aop:aspectj-autoproxy/>
+    <!-- AOP 注解识别，光有上面的包扫描可以扫描到注解还不行，得让Spring认识这是AOP注解-这里就是确定AOP注解生效-->
+     <aop:aspectj-autoproxy/>
 
 
     <import resource="applicationContext-datasource.xml"/>

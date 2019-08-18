@@ -1,5 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <configuration scan="true" scanPeriod="60 seconds" debug="false">
+    <!-- ConsoleAppender：将日志添加到控制台 -->
     <appender name="console" class="ch.qos.logback.core.ConsoleAppender">
         <encoding>UTF-8</encoding>
         <encoder>
@@ -50,8 +51,7 @@
 
 
 
-    <!-- geelynote mybatis log 日志 -->
-
+    <!-- geelynote mybatis log 日志，Dao层的SQL可以在日志中查看 -->
     <logger name="com.mmall.dao" level="DEBUG"/>
 
     <!--<logger name="com.ibatis.sqlmap.engine.impl.SqlMapClientDelegate" level="DEBUG" >-->

@@ -38,7 +38,7 @@ public class UserServiceImpl implements IUserService {
 
         //todo 密码登录MD5（加密的）
         String md5Password = MD5Util.MD5EncodeUtf8(password);
-        User user = userMapper.selectLogin(username, md5Password);
+        User user = userMapper.selectLogin(username, md5Password); //通过用户名和密码进行查询
         if(user == null){//user为Null,说明查询结果为null，即没有匹配上查询条件，所以密码错误
             return ServerResponse.createByErrorMessage("密码错误");
         }
@@ -133,7 +133,7 @@ public class UserServiceImpl implements IUserService {
 
     //忘记密码后的重置密码
     public ServerResponse<String> forgetResetPassword(String username, String passwordNew, String forgetToken){
-        //校验forgetToken
+        //校验forgetToken，即先判断是否携带了token
         if(StringUtils.isBlank(forgetToken)){  //如果传参forgetToken是空的，则返回失败
             return ServerResponse.createByErrorMessage("参数错误，token需要传递");
         }
@@ -155,7 +155,7 @@ public class UserServiceImpl implements IUserService {
         //比较获取的token与本地缓存的forgetToken
         if(org.apache.commons.lang3.StringUtils.equals(forgetToken,token)){  //若一样，则可以开始修改密码了
             String md5Password = MD5Util.MD5EncodeUtf8(passwordNew);
-            //返回uodate生效行数，若大于0则生效
+            //返回update生效行数，若大于0则生效
             int rowCount = userMapper.updatePasswordByUsername(username, md5Password); //这里参数新密码要用MD5加密后的，不是与原来的passwordNew
             if(rowCount > 0){
                 return ServerResponse.createBySuccessMessage("修改密码成功");

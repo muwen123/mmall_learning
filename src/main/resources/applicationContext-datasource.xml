@@ -8,7 +8,7 @@
      http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
      http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx.xsd
      http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop.xsd">
-
+    <!-- 注解扫描器-包扫描-扫描该包下所有的注解  上面xmlns:context，为了实现component注解而引入的命名空间，其表明标签格式为<context:标签名> -->
     <context:component-scan base-package="com.mmall" annotation-config="true"/>
 
     <bean id="propertyConfigurer"
@@ -23,7 +23,7 @@
         <property name="fileEncoding" value="utf-8"/>
     </bean>
 
-
+    <!-- ================= 配置数据源 ==================== -->
     <bean id="dataSource" class="org.apache.commons.dbcp.BasicDataSource" destroy-method="close">
         <property name="driverClassName" value="${db.driverClassName}"/>
         <property name="url" value="${db.url}"/>
@@ -57,7 +57,10 @@
         <property name="validationQuery" value="SELECT 1 FROM dual"/>
     </bean>
 
+    <!-- ==================== 针对Mybatis的配置项 ========================== -->
+    <!-- 配置sqlSessionFactory -->
     <bean id="sqlSessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
+        <!-- 实例化sqlSessionFactory时需要使用上述配置好的数据源和SQL映射文件Mapper.xml -->
         <property name="dataSource" ref="dataSource"/>
         <property name="mapperLocations" value="classpath*:mappers/*Mapper.xml"></property>
 
@@ -75,14 +78,16 @@
         </property>
 
     </bean>
-
+    <!-- 配置扫描器 -->
     <bean name="mapperScannerConfigurer" class="org.mybatis.spring.mapper.MapperScannerConfigurer">
+        <!-- 扫描com.mmall.dao这个包以及它的子包下的所有映射接口类 -->
         <property name="basePackage" value="com.mmall.dao"/>
     </bean>
 
+    <!-- =================================================== -->
     <!-- 使用@Transactional进行声明式事务管理需要声明下面这行 -->
     <tx:annotation-driven transaction-manager="transactionManager" proxy-target-class="true" />
-    <!-- 事务管理 -->
+    <!-- 配置Spring的事务管理器 -->
     <bean id="transactionManager" class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
         <property name="dataSource" ref="dataSource"/>
         <property name="rollbackOnCommitFailure" value="true"/>

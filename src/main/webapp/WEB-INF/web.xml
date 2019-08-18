@@ -29,8 +29,10 @@
     </listener>
 
     <listener>
+        <description>Spring与Mybatis整合的监听器</description>
         <listener-class>org.springframework.web.context.ContextLoaderListener</listener-class>
     </listener>
+    <!-- ContextLoaderListener初始化Spring上下文时需要的contextConfigLocation参数-->
     <context-param>
         <param-name>contextConfigLocation</param-name>
         <param-value>

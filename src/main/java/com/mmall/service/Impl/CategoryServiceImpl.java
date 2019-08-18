@@ -82,9 +82,9 @@ public class CategoryServiceImpl implements ICategoryService {
     public ServerResponse<List<Integer>> selectCategoryAndChildrenById(Integer categoryId){
         Set<Category> categorySet = Sets.newHashSet();  //用guava中Sets对下面递归算法中参数：categorySet进行初始化（创建一个对象，需要new，跟这是一个道理）
         findChildCategory(categorySet, categoryId);
-        //返回的是一个categoryId的集合，而categorySet存储的是Category对象
+        //返回的是一个categoryId的集合--下面声明该数据结构，而categorySet存储的是Category对象
         List<Integer> categoryIdList = Lists.newArrayList();    //与new ArrayList()是一样的，只不过这里调用的是guava中的方法Lists下的一个方法
-        if(categoryIdList != null){
+        if(categoryId != null){
             //遍历CategorySet对象，得到其Id(Set的调用getId()方法),然后add到categoryIdList中
             for(Category categoryItem : categorySet) {
                 categoryIdList.add(categoryItem.getId());
